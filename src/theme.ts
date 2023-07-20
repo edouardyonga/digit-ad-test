@@ -1,24 +1,11 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from '@mui/material';
 
-declare module '@mui/material/styles' {
-    interface Palette {
-        customType: 'light' | 'dark';
-    }
-    interface PaletteOptions {
-        customType?: 'light' | 'dark';
-    }
-}
-
-const theme = createTheme({
-    palette: {
-        customType: 'light', // You can set the initial theme type here (light or dark)
-        primary: {
-            main: '#2196f3',
+const Theme = (mode: any) => {
+    return createTheme({
+        palette: {
+            mode
         },
-        secondary: {
-            main: '#f50057',
-        },
-    },
-});
+    });
+};
 
-export default theme;
+export default Theme;
