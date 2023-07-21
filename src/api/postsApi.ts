@@ -22,6 +22,12 @@ export async function fetchPosts(page: number, limit: number): Promise<Post[]> {
 
 }
 
+export async function fetchAllPosts(): Promise<Post[]> {
+    const response = await axios.get<Post[]>(`${BASE_URL}/posts`);
+    return response.data;
+
+}
+
 export async function fetchPostDetails(postId: string | undefined): Promise<Post> {
     const response = await axios.get<Post>(`${BASE_URL}/posts/${postId as unknown as number}`);
     return response.data;
