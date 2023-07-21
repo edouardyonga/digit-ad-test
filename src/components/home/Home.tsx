@@ -1,45 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import Posts from './Posts';
-import { Post, fetchPosts } from '../../api/postsApi';
+import { Post, fetchAllPosts } from '../../api/postsApi';
 import { Box, Container, Divider, FormControl, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Pagination, Skeleton, Stack, Typography } from '@mui/material';
 import Masonry from '@mui/lab/Masonry';
 import { Search } from '@mui/icons-material';
 
 const Home: React.FC = () => {
     const [posts, setPosts] = useState<Post[]>([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const limit = 6;
+    const [allPosts, setAllPosts] = useState<Post[]>([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [loader, setLoader] = useState(false)
 
-    const loadMorePosts = async (page: number) => {
+    const loadMorePosts = async () => {
         setLoader(true)
         try {
-            const newPosts = await fetchPosts(page, limit);
+            const newPosts = await fetchAllPosts();
             setPosts(newPosts)
-            setCurrentPage(page)
+            setAllPosts(newPosts)
         } catch (error) {
             console.error('Error loading more posts:', error);
         }
         setLoader(false)
     };
-    console.log(searchQuery.length);
 
     const handleSearch = () => {
-
-        const filteredPosts = posts.filter((post) =>
+        const filteredPosts = allPosts.filter((post) =>
             post.title.toLowerCase().includes(searchQuery.toLowerCase())
         );
-
         setPosts(filteredPosts);
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(event.target.value);
+        handleSearch()
     };
 
     useEffect(() => {
-        loadMorePosts(currentPage);
+        loadMorePosts();
     }, []);
 
     return (
@@ -114,15 +111,6 @@ const Home: React.FC = () => {
                             </Grid>
                         ))}
                     </Masonry>}
-
-                <div style={{ display: 'flex', justifyContent: 'center', margin: '15px' }}>
-                    <Stack spacing={2} sx={{ mx: 'auto' }}>
-                        <Pagination count={16} color="secondary" page={currentPage} onChange={(e, page) => (
-                            loadMorePosts(page as unknown as number)
-                        )} />
-                    </Stack>
-                </div>
-
             </Box>
         </Container>
     );
