@@ -1,24 +1,43 @@
 import { createTheme } from '@mui/material/styles';
 
-declare module '@mui/material/styles' {
-    interface Palette {
-        customType: 'light' | 'dark';
-    }
-    interface PaletteOptions {
-        customType?: 'light' | 'dark';
-    }
-}
-
-const theme = createTheme({
+const lightTheme = createTheme({
     palette: {
-        customType: 'light', // You can set the initial theme type here (light or dark)
+        mode: 'light',
         primary: {
-            main: '#2196f3',
+            main: '#e37020',
         },
         secondary: {
-            main: '#f50057',
+            main: '#e45121',
+        },
+        background: {
+            paper: '#fff',
+            default: '#f5f5f5',
+        },
+        text: {
+            primary: 'rgba(0, 0, 0, 0.87)',
+            secondary: 'rgba(0, 0, 0, 0.54)',
         },
     },
 });
 
-export default theme;
+const darkTheme = createTheme({
+    palette: {
+        mode: 'dark',
+        primary: {
+            main: '#e37020',
+        },
+        secondary: {
+            main: '#e45121',
+        },
+        background: {
+            paper: '#4d4d4d',
+            default: '#000',
+        },
+        text: {
+            primary: '#fff',
+            secondary: 'rgba(255, 255, 255, 0.7)',
+        },
+    },
+});
+
+export { lightTheme, darkTheme };
