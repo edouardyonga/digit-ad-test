@@ -44,7 +44,7 @@ const Home: React.FC = () => {
 
     return (
         <Container>
-            <Box sx={{ padding: '20px' }}>
+            <Box sx={{ paddingTop: '30px' }}>
                 <Typography gutterBottom variant="h5" component="h4" sx={{ color: 'primary.main' }}>
                     Home
                 </Typography>
